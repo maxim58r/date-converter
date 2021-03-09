@@ -5,16 +5,23 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Optional;
 
 public class Converter {
 
-    // 2019-12-15T23:59:59
-    // пример запроса XMLGregorianCalendar 10/20
+    // пример корректной даты 2019-12-15T23:59:59
+    // пример запроса  "10/20"
 
     public static LocalDateTime convertStringToLocalDateTime(String bankDate) {
         String s = "-01T23:59:59";
         String[] split = bankDate.split("/");
-        String str = "20" + split[1] + "-" + split[0] + s;
+        String str = Optional.of(split)
+                .filter(spl -> spl.length == 2)
+                .map(strings -> "20" + split[1] + "-" + split[0] + s)
+                .orElseThrow(() -> {
+                    throw new RuntimeException("Invalid date format");
+                });
+//        "20" + split[1] + "-" + split[0] + s;
         LocalDateTime time = LocalDateTime.parse(str);
         return time.with(TemporalAdjusters.lastDayOfMonth());
     }
