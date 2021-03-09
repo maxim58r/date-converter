@@ -21,7 +21,6 @@ public class Converter {
                 .orElseThrow(() -> {
                     throw new RuntimeException("Invalid date format");
                 });
-//        "20" + split[1] + "-" + split[0] + s;
         LocalDateTime time = LocalDateTime.parse(str);
         return time.with(TemporalAdjusters.lastDayOfMonth());
     }
