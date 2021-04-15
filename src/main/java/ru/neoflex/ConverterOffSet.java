@@ -146,7 +146,7 @@ public class ConverterOffSet {
                             0,
                             offsetDateTime.getOffset().getTotalSeconds() / 60);
         } catch (DatatypeConfigurationException e) {
-            throw new InternalMappingException("ошибка преобразования времени MassageDate: " + e);
+            throw new RuntimeException("ошибка преобразования времени MassageDate: " + e);
         }
     }
 
